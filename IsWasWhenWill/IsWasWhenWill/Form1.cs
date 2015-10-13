@@ -37,5 +37,66 @@ namespace IsWasWhenWill
                 }
             }
         }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            int add1;
+            int what1;
+            add1 = Convert.ToInt32(textBox1.Text);
+            what1 = Convert.ToInt32(comboBox1.SelectedIndex);
+
+            switch(what1)
+            {
+                case 0: //days
+                    dtpResult1.Value = dtpInitial1.Value.AddDays(add1);
+
+                    return;
+                case 1: //weeks
+                    dtpResult1.Value = dtpInitial1.Value.AddDays(add1 * 7);
+                    return;
+                case 2: //months
+                    dtpResult1.Value = dtpInitial1.Value.AddMonths(add1);
+                    return;
+                case 3: //years
+                    dtpResult1.Value = dtpInitial1.Value.AddYears(add1);
+                    return;
+                default:
+                    return;
+            } 
+                      
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int add1;
+            int what1;
+            add1 = Convert.ToInt32(textBox1.Text);
+            what1 = Convert.ToInt32(comboBox1.SelectedIndex);
+
+            switch (what1)
+            {
+                case 0: //days
+                    dtpResult1.Value = dtpInitial1.Value.AddDays(add1);
+
+                    return;
+                case 1: //weeks
+                    dtpResult1.Value = dtpInitial1.Value.AddDays(add1 * 7);
+                    return;
+                case 2: //months
+                    dtpResult1.Value = dtpInitial1.Value.AddMonths(add1);
+                    return;
+                case 3: //years
+                    dtpResult1.Value = dtpInitial1.Value.AddYears(add1);
+                    return;
+                default:
+                    return;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        { 
+            //ucTimeInterval ucNext = new ucTimeInterval();     WIP
+            //ucNext.Location.X 
+        }
     }
 }
