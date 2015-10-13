@@ -10,9 +10,8 @@ Example:  Todays date: October 13, 2015 2pm;
           Result/'Coordinates' : October 27, 2025 2:30pm;
 
 Applications:        
-                               Vague Meeting/Appointment agreement:  "Let us meet a month from now?"
-                Possible meaning: a) November 13, 2015 (same date [13] but next month);
-                                  b) November 12, 2015 (30 days);
-                
-                Solution: Input as stated: Date: [Automatically "Now"]
+Vague Meeting/Appointment agreement:  "Let us meet a month from now?"
+Possible meaning: a) November 13, 2015 (same date [13] but next month);
+b) November 12, 2015 (30 days);
+Solution: Input as stated: Date: [Automatically "Now"]
 
