@@ -38,6 +38,10 @@ namespace IsWasWhenWill
         }
         public int addInterval { get; private set; }
         public int whichInterval { get; private set; }
+        public string whichButton()
+        {
+            return this.Name;
+        }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) //selection in dropbox changed
         {            
@@ -56,7 +60,15 @@ namespace IsWasWhenWill
         private void addUC_Click(object sender, EventArgs e)
         {
             if (OnButtonClick != null)
-                OnButtonClick(this, e);
+            {                
+                OnButtonClick(this.addUC, e);
+            }
+        }
+
+        private void removeUC_Click(object sender, EventArgs e)
+        {
+            if (OnButtonClick != null)
+                OnButtonClick(this.removeUC, e);
         }
 
 

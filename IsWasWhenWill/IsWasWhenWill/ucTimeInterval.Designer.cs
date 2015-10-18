@@ -31,6 +31,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.addUC = new System.Windows.Forms.Button();
+            this.removeUC = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox1
@@ -71,10 +72,21 @@
             this.addUC.UseVisualStyleBackColor = true;
             this.addUC.Click += new System.EventHandler(this.addUC_Click);
             // 
+            // removeUC
+            // 
+            this.removeUC.Location = new System.Drawing.Point(248, 2);
+            this.removeUC.Name = "removeUC";
+            this.removeUC.Size = new System.Drawing.Size(21, 20);
+            this.removeUC.TabIndex = 4;
+            this.removeUC.Text = "-";
+            this.removeUC.UseVisualStyleBackColor = true;
+            this.removeUC.Click += new System.EventHandler(this.removeUC_Click);
+            // 
             // ucTimeInterval
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.removeUC);
             this.Controls.Add(this.addUC);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.textBox1);
@@ -90,5 +102,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button addUC;
+        private System.Windows.Forms.Button removeUC;
     }
 }
