@@ -24,7 +24,7 @@ namespace IsWasWhenWill
         Point currentP;
         Point previousP;
         
-        private int getCurrentIndex()                       //mmmm possibly will use.
+        private int getCurrentIndex()                       //mmmm possibly will use...
         {            
             for(int i = 0; i < entryPanel.Length; i++)
             {
