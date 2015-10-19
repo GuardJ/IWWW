@@ -44,14 +44,30 @@ namespace IsWasWhenWill
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) //selection in dropbox changed
-        {            
-            addInterval = Convert.ToInt32(textBox1.Text);
-            whichInterval = Convert.ToInt32(comboBox1.SelectedIndex);
+        {    
+            if(textBox1.Text == "")
+            {
+                addInterval = 0;
+            }
+            else
+            {
+                addInterval = Convert.ToInt32(textBox1.Text);
+            }
+
+            whichInterval = Convert.ToInt32(comboBox1.SelectedIndex);            
         }
 
         private void textBox1_Leave(object sender, EventArgs e) //current textbox unfocused
-        {            
-            addInterval = Convert.ToInt32(textBox1.Text);
+        {
+            if (textBox1.Text == "")
+            {
+                addInterval = 0;
+            }
+            else
+            {
+                addInterval = Convert.ToInt32(textBox1.Text);
+            }
+
             whichInterval = Convert.ToInt32(comboBox1.SelectedIndex);
         }
 
@@ -59,10 +75,9 @@ namespace IsWasWhenWill
 
         private void addUC_Click(object sender, EventArgs e)
         {
-            if (OnButtonClick != null)
-            {                
+            if (OnButtonClick != null)              
                 OnButtonClick(this.addUC, e);
-            }
+            
         }
 
         private void removeUC_Click(object sender, EventArgs e)
@@ -71,6 +86,12 @@ namespace IsWasWhenWill
                 OnButtonClick(this.removeUC, e);
         }
 
+        public static EventHandler OnEnter { get; set; }
 
+        private void ucTimeInterval_Enter(object sender, EventArgs e)
+        {
+            if (OnEnter != null)
+                OnEnter(this, e);
+        }
     }
 }

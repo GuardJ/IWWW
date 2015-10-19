@@ -92,6 +92,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "ucTimeInterval";
             this.Size = new System.Drawing.Size(289, 27);
+            this.Enter += new System.EventHandler(this.ucTimeInterval_Enter);
             this.ResumeLayout(false);
             this.PerformLayout();
 
