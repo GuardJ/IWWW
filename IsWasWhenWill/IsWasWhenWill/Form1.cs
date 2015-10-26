@@ -18,13 +18,29 @@ namespace IsWasWhenWill
         {
             InitializeComponent();
         }
-        ucTimeInterval[] entryPanel = new ucTimeInterval[4]; // new ucTimeInterval[4];    //array of UC... 4 MAX
+        ucTimeInterval[] entryPanel = new ucTimeInterval[4]; 
         Point mainAnchor = new Point(104, 50);
         Point nextP;
         Point currentP;
         Point previousP;
-        
-        private int getCurrentIndex()                       //mmmm possibly will use...
+
+        private void setCurrent(ucTimeInterval ucThis)
+        {
+            //use entryPanel
+            ucThis.Name = "this";
+            for (int l = 0; l < entryPanel.Length; l++)
+            {
+                if (entryPanel[l] != null)
+                {
+                    if (entryPanel[l].Name != "this")
+                        entryPanel[l].Name = "";
+                }
+            }
+            ucThis.Name = "Current";
+            previousP = currentP;
+            ucLocations();
+        }
+        private int  getCurrentIndex()
         {            
             for(int i = 0; i < entryPanel.Length; i++)
             {
@@ -38,48 +54,27 @@ namespace IsWasWhenWill
         }
         private void ucLocations()
         {
-            for(int i = 0; i < entryPanel.Length; i++)
+            if (isOnly())
             {
-                if (entryPanel[i] != null)
+                int u = firstUsedIndex();
+                entryPanel[u].Location = mainAnchor;
+            }
+            int x = getCurrentIndex();
+            if (x != 5)
+            {
+                currentP = entryPanel[x].Location;
+                nextP = new Point(currentP.X, currentP.Y + 30);
+                for(int t = 0; t < entryPanel.Length; t++)
                 {
-                    if (entryPanel[i].Name == "Initial")
-                        entryPanel[i].Location = mainAnchor;
-                    if (entryPanel[i].Name == "Current")
-                        entryPanel[i].Location = currentP;
-                    if (entryPanel[i].Name == "Previous")
+                    if (entryPanel[t] != null && entryPanel[t].Location == nextP)
                     {
-                        previousP.Y = currentP.Y - 30;
-                        entryPanel[i].Location = previousP;
-                    }
-                    if (entryPanel[i].Name == "Next")
-                    {
-                        nextP.Y = currentP.Y + 30;
-                        entryPanel[i].Location = nextP;
+                        entryPanel[t].Location = new Point(nextP.X, nextP.Y + 30);
                     }
                 }
             }
         }
-        private void setCurrent(ucTimeInterval ucThis)
-        {
-            //use entryPanel
-            for (int i = 0; i < entryPanel.Length; i++)
-            {
-                if (entryPanel[i] != null)
-                {
-                    if (entryPanel[i].Name == ucThis.Name)
-                    {
-                        entryPanel[i].Name = "Current";
-                        entryPanel[i + 1].Name = "Next";
-                        if (entryPanel[i - 1] != null)
-                            entryPanel[i - 1].Name = "Previous";
-                        if (entryPanel[i - 2] != null)
-                            entryPanel[i - 2].Name = "Previous2";
-
-                    }                        
-                }
-            }
-        }
-        private int ucCount()
+ 
+        private int  ucCount()
         {
             int nullCount = 0;
             for(int i = 0; i < entryPanel.Length; i++)
@@ -91,15 +86,60 @@ namespace IsWasWhenWill
             }
             return entryPanel.Length - nullCount;
         }
+        private bool isEmpty()
+        {
+            foreach (ucTimeInterval uc in entryPanel)
+            {
+                if (uc != null)
+                    return false;
+            }
+            return true;
+        }
         private bool isFull()
         {
-            foreach (UserControl uc in entryPanel)
+            foreach (ucTimeInterval uc in entryPanel)
             {
                 if (uc == null)
                     return false;
             }
             return true;
         }
+        private bool isOnly()
+        {
+            int only = 0;
+            foreach (ucTimeInterval uc in entryPanel)
+            {
+                if (uc != null)
+                    only++;
+                if (only > 1)
+                    return false;
+            }
+            return true;
+        }
+        private int firstEmptyIndex()
+        {
+            int e;
+
+            for (e = 0; e < entryPanel.Length; e++)
+            {
+                if (entryPanel[e] == null)
+                    return e;
+            }
+            return e;
+        }
+        private int firstUsedIndex()
+        {
+            int u;
+
+            for (u = 0; u < entryPanel.Length; u++)
+            {
+                if (entryPanel[u] != null)
+                    return u;
+            }
+            return u;
+        }
+
+
         private void UserControl_ButtonClick(object sender, EventArgs e)
         {
             if (sender is Button)
@@ -107,7 +147,7 @@ namespace IsWasWhenWill
                 if ((sender as Button).Name == "addUC")
                 {
                     label1.Text = (sender as Button).Parent.Name + " Adding";
-                    addingUC();                   
+                    addingUC();                                       
                 }
                 if ((sender as Button).Name == "removeUC")
                 {
@@ -118,7 +158,6 @@ namespace IsWasWhenWill
         }
         private void UserControl_Enter(object sender, EventArgs e)
         {
-            label2.Text = (sender as ucTimeInterval).Name;
             setCurrent((sender as ucTimeInterval));
         }
         
@@ -128,34 +167,42 @@ namespace IsWasWhenWill
                 return;
             else
             {
-                int p = getCurrentIndex();
-                int c = p + 1;
-                entryPanel[c] = new ucTimeInterval();
-                this.Controls.Add(entryPanel[c]);   
+                int c = firstEmptyIndex();
+                if (c != 5)
+                {
+                    entryPanel[c] = new ucTimeInterval();
+                    entryPanel[c].Location = nextP;
+                    entryPanel[c].Name = "";
+                    this.Controls.Add(entryPanel[c]);
+                }
             }
         }
         private void removingUC()
         {
-            int c = getCurrentIndex();
-                        
-            foreach(Control control in entryPanel[c].Controls)
+            if (!isOnly())
             {
-                control.Dispose();
+                int c = getCurrentIndex();
+
+                foreach (Control control in entryPanel[c].Controls)
+                {
+                    control.Dispose();
+                }
+                entryPanel[c].Controls.Clear();
+                entryPanel[c].Dispose();
+                entryPanel[c] = null;
             }
-            entryPanel[c].Controls.Clear();
-            entryPanel[c].Dispose();
-            entryPanel[c] = null;
+            ucLocations();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ucTimeInterval.OnEnter += new EventHandler(UserControl_Enter);              //enter
+            ucTimeInterval.OnEnter += new EventHandler(UserControl_Enter);              //enter handler
             ucTimeInterval.OnButtonClick += new EventHandler(UserControl_ButtonClick);   //tie UC event to handler in form
-            ucTimeInterval initial = new ucTimeInterval();          //create an initial uc                          
-            initial.Name = "Initial";//name possibly used to organize array
+            ucTimeInterval initial = new ucTimeInterval();                                
+            initial.Name = "Initial";
+            initial.Location = mainAnchor;
             entryPanel[0] = initial;
-            ucLocations();           
-            this.Controls.Add(initial);
+            this.Controls.Add(initial);            
         }
     }
 }
